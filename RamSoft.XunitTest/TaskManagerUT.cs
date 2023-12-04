@@ -44,16 +44,15 @@ namespace RamSoft.XunitTest
         public void GetAllTask_Return_200_OK_Result()
         {
             //arrange
-            //List<TaskManagerDto> taskManagerDtos = new();
-
             _mockTaskWorker.Setup<Task<IEnumerable<TaskManagerDto>>>(x => x.GetAllTask())
-                 .Returns(Task.FromResult<IEnumerable<TaskManagerDto>>((IEnumerable<TaskManagerDto>)null));
+             .Returns(Task.FromResult<IEnumerable<TaskManagerDto>>((IEnumerable<TaskManagerDto>)null));
             var taskController = new TaskController(_mockTaskWorker.Object);
             //act
             var result = (OkObjectResult)taskController.GetAllTask();
             //assert
             result.StatusCode.Should().Be(200);
         }
+
         [Fact]
         public async void CreateTask_Return_Sucess()
         {
@@ -72,24 +71,7 @@ namespace RamSoft.XunitTest
             response.StatusCode.Should().Be(200);
         }
 
-        //[Fact]
-        //public async void CreateTask_Return_BadRequest()
-        //{
-        //    //arrange
-
-        //    TaskModel taskModel = new TaskModel
-        //    {
-        //        Title = string.Empty
-        //    };
-
-        //    _mockTaskWorker.Setup(x => x.CreateTask(taskModel));
-
-        //    var taskController = new TaskController(_mockTaskWorker.Object);
-        //    //act
-        //    var response = await taskController.CreateTask(taskModel).re;
-        //    //assert
-        //    _mockTaskWorker.Verify(_ => _.CreateTask(taskModel), Times.Exactly(1));
-        //}
+       
 
         [Fact]
         public void Edit__Return_Sucess()
@@ -185,8 +167,6 @@ namespace RamSoft.XunitTest
             //arrange
             int Id = 4;
             _mockTaskWorker.Setup(x => x.DeleteTask(Id)).Returns(Task.FromResult<string?>(null));
-            //(Task.FromResult<string>(null));
-
             var taskController = new TaskController(_mockTaskWorker.Object);
             //act
             var response = (NotFoundResult)await taskController.Delete(Id);
